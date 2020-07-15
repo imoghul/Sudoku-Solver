@@ -56,7 +56,11 @@ public class Board {
         for (int i = 0; i < board.size(); i++) {
             for (int j = 0; j < 9; j++) {
                 if (get(j, i).getT().equals("number")) {
-                    System.out.print(getNumber(j, i) + "    ");
+                    if (getNumber(j, i) == 0) {
+                        System.out.print("     ");
+                    } else {
+                        System.out.print(getNumber(j, i) + "    ");
+                    }
                 } else {
                     System.out.print("?    ");// System.out.print(getNumbers(j, i) + " ");
                 }
