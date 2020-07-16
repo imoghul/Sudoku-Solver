@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.awt.Point;
 
 public class Board {
     public ArrayList<ArrayList<SodukoNumber>> board = new ArrayList();
@@ -10,6 +11,19 @@ public class Board {
                 board.get(i).add(new SodukoNumber(i, j));
             }
         }
+    }
+
+    public Board(int[][] b) {
+        for (int i = 0; i < 9; i++) {
+            board.add(new ArrayList());
+            for (int j = 0; j < 9; j++) {
+                board.get(i).add(new SodukoNumber(i, j, b[i][j]));
+            }
+        }
+    }
+
+    public Board(ArrayList<ArrayList<SodukoNumber>> n) {
+        board = n;
     }
 
     public ArrayList getBoard() {
@@ -52,9 +66,32 @@ public class Board {
         return new Column(x, y, board);
     }
 
+    public SodukoNumber getNextOpenRaw() {
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (board.get(j).get(i).getT().equals("list")) {
+                    return board.get(j).get(i);
+                }
+            }
+        }
+        return new SodukoNumber(-1, -1, -1);
+
+    }
+
+    public Point getNextOpen() {
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (!board.get(j).get(i).isFilled()) {
+                    return new Point(board.get(j).get(i).getX(), board.get(j).get(i).getY());
+                }
+            }
+        }
+        return new Point(0, 0);
+    }
+
     public void showBoard() {
         for (int i = 0; i < board.size(); i++) {
-            for (int j = 0; j < 9; j++) {
+            for (int j = 0; j < board.get(i).size(); j++) {
                 if (get(j, i).getT().equals("number")) {
                     if (getNumber(j, i) == 0) {
                         System.out.print("     ");
@@ -62,7 +99,7 @@ public class Board {
                         System.out.print(getNumber(j, i) + "    ");
                     }
                 } else {
-                    System.out.print("?    ");// System.out.print(getNumbers(j, i) + " ");
+                    /* System.out.print("?    "); */System.out.print(getNumbers(j, i) + " ");
                 }
                 if ((j + 1) % 3 == 0) {
                     System.out.print("|");
@@ -73,14 +110,23 @@ public class Board {
                 System.out.println("________________________________________________");
             }
         }
+        System.out.println();
+        System.out.println();
     }
 
 }
 
 class subBoard {
     private ArrayList<Integer> sub = new ArrayList();
+    ArrayList<ArrayList<SodukoNumber>> board;
+
+    int X;
+    int Y;
 
     public subBoard(int x, int y, ArrayList<ArrayList<SodukoNumber>> b) {
+        X = x;
+        Y = y;
+        board = b;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if ((b.get(i + 3 * y).get(j + 3 * x).getVal()) != 0) {
@@ -88,10 +134,23 @@ class subBoard {
                 }
             }
         }
+
     }
 
     public ArrayList getIt() {
         return sub;
+    }
+
+    public Board getItRaw() {
+        ArrayList<ArrayList<SodukoNumber>> b = board;
+        ArrayList<ArrayList<SodukoNumber>> subB = new ArrayList();
+        for (int i = 0; i < 3; i++) {
+            subB.add(new ArrayList(3));
+            for (int j = 0; j < 3; j++) {
+                subB.get(i).add(b.get(i + 3 * Y).get(j + 3 * X));
+            }
+        }
+        return new Board(subB);
     }
 }
 

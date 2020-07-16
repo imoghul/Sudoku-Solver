@@ -5,7 +5,7 @@ public class SodukoNumber {
     private int x;
     private int y;
     private int val;
-    private ArrayList vals;
+    private ArrayList<Integer> vals = new ArrayList(Arrays.asList(0));
 
     String t;
 
@@ -13,6 +13,7 @@ public class SodukoNumber {
         x = why;
         y = ex;
         val = 0;
+        vals = new ArrayList(Arrays.asList(0));
         t = "number";
     }
 
@@ -20,6 +21,8 @@ public class SodukoNumber {
         x = why;
         y = ex;
         val = v;
+        vals.set(0, v);
+        vals = new ArrayList(Arrays.asList(v));
         t = "number";
     }
 
@@ -27,6 +30,7 @@ public class SodukoNumber {
         x = why;
         y = ex;
         val = v;
+        vals = new ArrayList(Arrays.asList(v));
         t = "number";
     }
 
@@ -49,7 +53,8 @@ public class SodukoNumber {
         return val;
     }
 
-    public ArrayList getVals() {
+    public ArrayList<Integer> getVals() {
+
         return vals;
     }
 

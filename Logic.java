@@ -25,4 +25,29 @@ public class Logic {
 
         return (new SodukoNumber(x, y, newNums));
     }
+
+    public ArrayList getUniqueSub(int x, int y, Board b) {
+        ArrayList n = b.get(x, y).getVals();
+        ArrayList p = removeALL(n, b.getSubBoard(x, y).getItRaw().get(0, 0).getVals());
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                p = removeALL(n, b.getSubBoard(x, y).getItRaw().get(j, i).getVals());
+            }
+        }
+        return p;
+    }
+
+    public ArrayList removeALL(ArrayList main, ArrayList sub) {
+        main.removeAll(sub);
+        return main;
+    }
+
+    public boolean attempt(SodukoNumber s, Board b) {
+        // System.out.println(b.getSubBoard(s.getX(), s.getY()).getIt());
+        // System.out.println(s.getVal() + ", " + !b.getSubBoard(s.getX(),
+        // s.getY()).getIt().contains(s.getVal()));
+        return (!b.getSubBoard(s.getX(), s.getY()).getIt().contains(s.getVal())
+                && !b.getRow(s.getX(), s.getY()).getIt().contains(s.getVal())
+                && !b.getColumn(s.getX(), s.getY()).getIt().contains(s.getVal()));
+    }
 }
