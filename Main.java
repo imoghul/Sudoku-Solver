@@ -12,9 +12,20 @@ public class Main {
         // DEFINE YOUR POINTS BELOW WITH X BEING POSITIVE DIRECTION TO LEFT AND Y BEING
         // POSITIVE DIRECTION DOWN
 
+        Scanner s = new Scanner(System.in);
+        String list = s.nextLine();
+        System.out.println(list.length() % 3 == 0);
+        for (int i = 0; i < (list.length()) / 3; i++) {
+
+            Main.soduko.setVal(Integer.parseInt(String.valueOf(list.charAt(i * 3))),
+                    Integer.parseInt(String.valueOf(list.charAt(i * 3 + 1))),
+                    Integer.parseInt(String.valueOf(list.charAt(i * 3 + 2))));
+        }
+
+        // 001115212028126224309504316418322708802613629721131044149248056257434539343451638836647841759853168266075279183463565572384489587662869671773888
         /*
-         * Scanner s = new Scanner(System.in); int isDone = 0; while (isDone != 1) { int
-         * confirm = 0; System.out.println("x: "); int x = s.nextInt();
+         * while (isDone != 1) { int confirm = 0; System.out.println("x: "); int x =
+         * s.nextInt();
          * 
          * System.out.println("y: "); int y = s.nextInt();
          * 
@@ -23,39 +34,8 @@ public class Main {
          * System.out.println(val + " at: " + x + ", " + y); Main.soduko.setVal(x, y,
          * val);
          * 
-         * System.out.println("If you are done type 1: "); isDone = s.nextInt(); }(/)
+         * System.out.println("If you are done type 1: "); isDone = s.nextInt(); }
          */
-
-        Main.soduko.setVal(1, 1, 8);
-        Main.soduko.setVal(0, 2, 6);
-        Main.soduko.setVal(2, 2, 2);
-
-        Main.soduko.setVal(5, 1, 7);
-
-        Main.soduko.setVal(6, 0, 2);
-        Main.soduko.setVal(7, 1, 9);
-        Main.soduko.setVal(6, 2, 5);
-
-        Main.soduko.setVal(1, 3, 7);
-
-        Main.soduko.setVal(3, 4, 9);
-        Main.soduko.setVal(4, 3, 6);
-        Main.soduko.setVal(5, 4, 1);
-        Main.soduko.setVal(4, 5, 2);
-
-        Main.soduko.setVal(7, 5, 4);
-
-        Main.soduko.setVal(2, 6, 5);
-        Main.soduko.setVal(1, 7, 9);
-        Main.soduko.setVal(2, 8, 6);
-
-        Main.soduko.setVal(3, 7, 4);
-
-        Main.soduko.setVal(6, 6, 6);
-        Main.soduko.setVal(7, 7, 7);
-        Main.soduko.setVal(8, 6, 3);
-
-        // Main.soduko.showBoard();
 
         for (int y = 0; y < 9; y++) {
             for (int x = 0; x < 9; x++) {
@@ -73,14 +53,11 @@ public class Main {
 
         Main.soduko.showBoard();
         System.out.println();
+
         Main.solveSudoku(newBoard, 9);
         new Board(newBoard).showBoard();
-        // Main.solve(Main.soduko, new SodukoNumber(Main.soduko.getNextOpen().x,
-        // Main.mid.getNextOpen().y,
-        // Main.mid.getNumbers(Main.soduko.getNextOpen().x,
-        // Main.soduko.getNextOpen().y).get(0)));
-        // Main.solve(Main.soduko, new SodukoNumber(0, 0, 1));
-        // Main.solve(Main.mid).showBoard();
+
+        // Main.solve(Main.soduko, new SodukoNumber(0, 0));
 
     }
 
@@ -109,26 +86,30 @@ public class Main {
     }
 
     public static boolean solve(Board b, SodukoNumber s) {
-        Logic l = new Logic();
+        // Logic l = new Logic();
         if (isNotFull(b)) {
-            b.showBoard();
+            // b.showBoard();
             return true;
         }
         int nextX = b.getNextOpen().x;
         int nextY = b.getNextOpen().y;
-        b.showBoard();
-        for (int i = 0; i < l.getPossibilities(s.getX(), s.getY(), b).getVals().size(); i++) {
-            int nextPossible = l.getPossibilities(s.getX(), s.getY(), b).getVals().get(i);
+        // b.showBoard();
+        for (int i = 0; i < 9/* l.getPossibilities(s.getX(), s.getY(), b).getVals().size() */; i++) {
+            int nextPossible = i;// l.getPossibilities(s.getX(), s.getY(), b).getVals().get(i);
             // System.out.println(nextX + ", " + nextY);
             // System.out.println(l.getPossibilities(s.getX(), s.getY(), b).getVals());
+            System.out.println(nextPossible);
             boolean works = (!b.getSubBoard(nextX, nextY).getIt().contains(nextPossible)
                     && !b.getRow(nextX, nextY).getIt().contains(nextPossible)
                     && !b.getColumn(nextX, nextY).getIt().contains(nextPossible));
             if (works) {
 
                 b.setVal(nextX, nextY, nextPossible);
+                // b.showBoard();
                 if (solve(b, new SodukoNumber(b.getNextOpen().x, b.getNextOpen().y, nextPossible))) {
                     return true;
+                } else {
+                    b.setVal(nextX, nextY, 0);
                 }
 
             }
@@ -186,8 +167,9 @@ public class Main {
 
             if (l.attempt(new SodukoNumber(row, col, num), new Board(board))) {
                 board[row][col] = num;
-                Main.print(board, n);
-                System.out.println();
+                // Main.print(board, n);
+                // System.out.println(l.progress(new Board(board)) + "%");
+                // System.out.println();
                 if (solveSudoku(board, n)) {
 
                     return true;

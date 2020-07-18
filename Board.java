@@ -26,7 +26,7 @@ public class Board {
         board = n;
     }
 
-    public ArrayList getBoard() {
+    public ArrayList<ArrayList<SodukoNumber>> getBoard() {
         return board;
     }
 

@@ -50,4 +50,17 @@ public class Logic {
                 && !b.getRow(s.getX(), s.getY()).getIt().contains(s.getVal())
                 && !b.getColumn(s.getX(), s.getY()).getIt().contains(s.getVal()));
     }
+
+    public int progress(Board b) {
+        int total = b.getBoard().size() * b.getBoard().get(0).size();
+        int counter = 0;
+        for (int i = 0; i < b.getBoard().size(); i++) {
+            for (int j = 0; j < b.getBoard().get(i).size(); j++) {
+                if (b.get(j, i).isFilled()) {
+                    counter++;
+                }
+            }
+        }
+        return counter * 100 / total;
+    }
 }
