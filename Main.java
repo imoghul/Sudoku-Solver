@@ -57,7 +57,7 @@ public class Main {
         Main.solveSudoku(newBoard, 9);
         new Board(newBoard).showBoard();
 
-        // Main.solve(Main.soduko, new SodukoNumber(0, 0));
+        Main.solve(Main.soduko, new SodukoNumber(0, 0));
 
     }
 
@@ -94,11 +94,11 @@ public class Main {
         int nextX = b.getNextOpen().x;
         int nextY = b.getNextOpen().y;
         // b.showBoard();
-        for (int i = 0; i < 9/* l.getPossibilities(s.getX(), s.getY(), b).getVals().size() */; i++) {
+        for (int i = 1; i < 9/* l.getPossibilities(s.getX(), s.getY(), b).getVals().size() */; i++) {
             int nextPossible = i;// l.getPossibilities(s.getX(), s.getY(), b).getVals().get(i);
             // System.out.println(nextX + ", " + nextY);
             // System.out.println(l.getPossibilities(s.getX(), s.getY(), b).getVals());
-            System.out.println(nextPossible);
+            // System.out.println(nextPossible);
             boolean works = (!b.getSubBoard(nextX, nextY).getIt().contains(nextPossible)
                     && !b.getRow(nextX, nextY).getIt().contains(nextPossible)
                     && !b.getColumn(nextX, nextY).getIt().contains(nextPossible));
