@@ -57,7 +57,7 @@ public class Main {
         Main.solveSudoku(newBoard, 9);
         new Board(newBoard).showBoard();
 
-        Main.solve(Main.soduko, new SodukoNumber(0, 0));
+        // Main.solve(Main.soduko, new SodukoNumber(0, 0));
 
     }
 
